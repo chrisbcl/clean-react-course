@@ -4,7 +4,12 @@
         "project": "./tsconfig.json"
     },
     "rules": {
-        "indent": ["error", 4],
+        "space-before-function-paren": "off",
+        "@typescript-eslint/space-before-function-paren": ["off"],
+        "indent": "off",
+        "@typescript-eslint/indent": ["error", 4],
+        "semi": "off",
+        "@typescript-eslint/semi": ["error", "always"],
         "@typescript-eslint/consistent-type-definitions": "off",
         "@typescript-eslint/strict-boolean-expressions": "off"
     }
