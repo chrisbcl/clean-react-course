@@ -9,6 +9,8 @@
         "indent": "off",
         "@typescript-eslint/indent": ["warn", 4],
         "@typescript-eslint/consistent-type-definitions": "off",
-        "@typescript-eslint/strict-boolean-expressions": "off"
+        "@typescript-eslint/strict-boolean-expressions": "off",
+        "no-return-await": "error",
+        "@typescript-eslint/return-await": "off"
     }
 }
