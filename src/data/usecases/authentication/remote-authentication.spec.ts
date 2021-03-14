@@ -3,6 +3,7 @@ import { HttpPostClientSpy } from '@/data/test/mock-http-client'
 import { HttpStatusCode } from '@/data/protocols/http/http-response'
 import { mockAuthentication } from '@/domain/test/mock-authentication'
 import { InvalidCredentialsError } from '@/domain/errors/invalid-credentials-error'
+import { UnexpectedError } from '@/domain/errors/unexpected-error'
 import faker from 'faker'
 
 type SutTypes = {
@@ -43,5 +44,35 @@ describe('RemoteAuthentication', () => {
         const authenticationParams = mockAuthentication()
         const responsePromise = sut.auth(authenticationParams)
         await expect(responsePromise).rejects.toThrow(new InvalidCredentialsError())
+    })
+
+    it('should throw UnexpectedError if HttpPostClient return 400', async () => {
+        const { sut, httpPostClientSpy } = makeSut()
+        httpPostClientSpy.response = {
+            statusCode: HttpStatusCode.BadRequest
+        }
+        const authenticationParams = mockAuthentication()
+        const responsePromise = sut.auth(authenticationParams)
+        await expect(responsePromise).rejects.toThrow(new UnexpectedError())
+    })
+
+    it('should throw UnexpectedError if HttpPostClient return 404', async () => {
+        const { sut, httpPostClientSpy } = makeSut()
+        httpPostClientSpy.response = {
+            statusCode: HttpStatusCode.BadRequest
+        }
+        const authenticationParams = mockAuthentication()
+        const responsePromise = sut.auth(authenticationParams)
+        await expect(responsePromise).rejects.toThrow(new UnexpectedError())
+    })
+
+    it('should throw UnexpectedError if HttpPostClient return 500', async () => {
+        const { sut, httpPostClientSpy } = makeSut()
+        httpPostClientSpy.response = {
+            statusCode: HttpStatusCode.BadRequest
+        }
+        const authenticationParams = mockAuthentication()
+        const responsePromise = sut.auth(authenticationParams)
+        await expect(responsePromise).rejects.toThrow(new UnexpectedError())
     })
 })
