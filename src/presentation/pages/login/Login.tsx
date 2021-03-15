@@ -1,4 +1,5 @@
-import Logo from '@/presentation/components/logo/Logo'
+import Footer from '@/presentation/components/footer/Footer'
+import Header from '@/presentation/components/loginheader/LoginHeader'
 import Spinner from '@/presentation/components/spinner/Spinner'
 import React from 'react'
 import styles from './Login.styles.scss'
@@ -6,10 +7,7 @@ import styles from './Login.styles.scss'
 const Login = (): JSX.Element => {
     return (
         <div className={styles.Login}>
-            <header className={styles.Header}>
-                <Logo />
-                <h1>Clean React App</h1>
-            </header>
+            <Header />
             <form className={styles.Form}>
                 <h2>Login</h2>
                 <div className={styles.InputWrap}>
@@ -29,7 +27,7 @@ const Login = (): JSX.Element => {
                     <span className={styles.Error}>Error</span>
                 </div>
             </form>
-            <footer className={styles.Footer} />
+            <Footer />
         </div>
     )
 }
