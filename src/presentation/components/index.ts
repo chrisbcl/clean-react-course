@@ -1,3 +1,4 @@
+export { default as Router } from './router/Router'
 export { default as Footer } from './footer/Footer'
 export { default as FormStatus } from './formstatus/FormStatus'
 export { default as Input } from './input/Input'
