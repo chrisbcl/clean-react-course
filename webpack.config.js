@@ -37,8 +37,7 @@ module.exports = {
                     {
                         loader: 'sass-loader'
                     }
-                ],
-                exclude: ''
+                ]
             }
         ]
     },
@@ -49,7 +48,7 @@ module.exports = {
     },
     externals: {
         react: 'React',
-        'react-dom': 'ReactDom'
+        'react-dom': 'ReactDOM'
     },
     plugins: [new CleanWebpackPlugin()]
 }
