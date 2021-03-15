@@ -1,8 +1,8 @@
+import React from 'react'
 import Footer from '@/presentation/components/footer/Footer'
+import FormStatus from '@/presentation/components/formstatus/FormStatus'
 import Input from '@/presentation/components/input/Input'
 import Header from '@/presentation/components/loginheader/LoginHeader'
-import Spinner from '@/presentation/components/spinner/Spinner'
-import React from 'react'
 import styles from './Login.styles.scss'
 
 const Login = (): JSX.Element => {
@@ -17,10 +17,7 @@ const Login = (): JSX.Element => {
                     Login
                 </button>
                 <span className={styles.Link}>Create account</span>
-                <div className={styles.ErrorWrap}>
-                    <Spinner className={styles.Spinner} />
-                    <span className={styles.Error}>Error</span>
-                </div>
+                <FormStatus />
             </form>
             <Footer />
         </div>
