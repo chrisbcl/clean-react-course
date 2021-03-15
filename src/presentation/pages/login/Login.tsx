@@ -1,4 +1,5 @@
 import Footer from '@/presentation/components/footer/Footer'
+import Input from '@/presentation/components/input/Input'
 import Header from '@/presentation/components/loginheader/LoginHeader'
 import Spinner from '@/presentation/components/spinner/Spinner'
 import React from 'react'
@@ -10,14 +11,8 @@ const Login = (): JSX.Element => {
             <Header />
             <form className={styles.Form}>
                 <h2>Login</h2>
-                <div className={styles.InputWrap}>
-                    <input type='email' name='email' placeholder='Enter your email' />
-                    <span className={styles.Status}>🔴</span>
-                </div>
-                <div className={styles.InputWrap}>
-                    <input type='password' name='password' placeholder='Enter your password' />
-                    <span className={styles.Status}>🔴</span>
-                </div>
+                <Input type='email' name='email' placeholder='Enter your email' />
+                <Input type='password' name='password' placeholder='Enter your password' />
                 <button className={styles.Submit} type='submit'>
                     Login
                 </button>

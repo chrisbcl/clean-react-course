@@ -1,0 +1,17 @@
+.InputWrap {
+    display: flex;
+    margin-top: 16px;
+    position: relative;
+    align-items: center;
+
+    input {
+        flex-grow: 1;
+    }
+
+    .Status {
+        position: absolute;
+        right: 8px;
+        font-size: 12px;
+        cursor: help;
+    }
+}
