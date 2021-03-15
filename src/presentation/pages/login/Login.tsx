@@ -1,14 +1,11 @@
 import React from 'react'
-import Footer from '@/presentation/components/footer/Footer'
-import FormStatus from '@/presentation/components/formstatus/FormStatus'
-import Input from '@/presentation/components/input/Input'
-import Header from '@/presentation/components/loginheader/LoginHeader'
+import { Footer, FormStatus, Input, LoginHeader } from '@/presentation/components'
 import styles from './Login.styles.scss'
 
 const Login = (): JSX.Element => {
     return (
         <div className={styles.Login}>
-            <Header />
+            <LoginHeader />
             <form className={styles.Form}>
                 <h2>Login</h2>
                 <Input type='email' name='email' placeholder='Enter your email' />

@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import Logo from '../logo/Logo'
+import { Logo } from '@/presentation/components'
 import styles from './LoginHeader.styles.scss'
 
 const LoginHeader = (): JSX.Element => {
