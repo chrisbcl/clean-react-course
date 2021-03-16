@@ -5,8 +5,14 @@ import FormContext, { FormStateProps } from '@/presentation/contexts/form/FormCo
 
 const Login = (): JSX.Element => {
     const [state] = useState<FormStateProps>({
-        isLoading: false,
-        errorMessage: null
+        state: {
+            isLoading: false
+        },
+        errorState: {
+            mainError: null,
+            email: 'Required',
+            password: 'Required'
+        }
     })
 
     return (
