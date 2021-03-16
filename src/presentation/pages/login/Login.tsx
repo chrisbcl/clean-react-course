@@ -22,6 +22,10 @@ const Login = ({ validation }: LoginProps): JSX.Element => {
         validation?.validate({ email: state.email })
     }, [state.email])
 
+    useEffect(() => {
+        validation?.validate({ password: state.password })
+    }, [state.password])
+
     return (
         <div className={styles.Login}>
             <LoginHeader />
