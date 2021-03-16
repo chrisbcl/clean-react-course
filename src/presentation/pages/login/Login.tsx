@@ -14,12 +14,12 @@ const Login = ({ validation }: LoginProps): JSX.Element => {
         email: '',
         password: '',
         mainError: null,
-        emailError: 'Required',
+        emailError: '',
         passwordError: 'Required'
     })
 
     useEffect(() => {
-        validation?.validate('email', state.email)
+        setState((prev) => ({ ...prev, emailError: validation?.validate('email', state.email) }))
     }, [state.email])
 
     useEffect(() => {

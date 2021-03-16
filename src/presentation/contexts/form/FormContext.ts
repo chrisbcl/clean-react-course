@@ -5,8 +5,8 @@ export type FormStateProps = {
     email: string
     password: string
     mainError: string | null
-    emailError: string
-    passwordError: string
+    emailError: string | undefined
+    passwordError: string | undefined
 }
 
 const state: FormStateProps = {
