@@ -5,13 +5,12 @@ import styles from './FormStatus.styles.scss'
 
 const FormStatus = (): JSX.Element => {
     const {
-        state: { isLoading },
-        errorState: { mainError }
+        state: { isLoading, mainError }
     } = useContext(FormContext)
     return (
         <div data-testid='error-wrap' className={styles.ErrorWrap}>
             {isLoading ? <Spinner className={styles.Spinner} /> : null}
-            {mainError ? <span className={styles.Error}>Error</span> : null}
+            {mainError ? <span className={styles.Error}>{mainError}</span> : null}
         </div>
     )
 }

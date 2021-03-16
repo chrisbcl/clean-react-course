@@ -1,25 +1,26 @@
 import { createContext } from 'react'
 
 export type FormStateProps = {
-    state: {
-        isLoading: boolean
-    }
-    errorState: {
-        mainError: string | null
-        email: string
-        password: string
-    }
+    isLoading: boolean
+    email: string
+    password: string
+    mainError: string | null
+    emailError: string
+    passwordError: string
 }
 
-const initialState: FormStateProps = {
-    state: {
-        isLoading: false
-    },
-    errorState: {
-        mainError: null,
-        email: 'Required',
-        password: 'Required'
-    }
+const state: FormStateProps = {
+    isLoading: false,
+    email: '',
+    password: '',
+    mainError: null,
+    emailError: 'Required',
+    passwordError: 'Required'
+}
+
+const initialState = {
+    state,
+    setState: (() => {}) as React.Dispatch<React.SetStateAction<FormStateProps>>
 }
 
 export default createContext(initialState)
