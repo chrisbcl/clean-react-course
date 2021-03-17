@@ -34,7 +34,12 @@ const Login = ({ validation }: LoginProps): JSX.Element => {
                     <h2>Login</h2>
                     <Input type='email' name='email' placeholder='Enter your email' />
                     <Input type='password' name='password' placeholder='Enter your password' />
-                    <button data-testid='submit' disabled className={styles.Submit} type='submit'>
+                    <button
+                        data-testid='submit'
+                        disabled={!!state.emailError || !!state.passwordError}
+                        className={styles.Submit}
+                        type='submit'
+                    >
                         Login
                     </button>
                     <span className={styles.Link}>Create account</span>
