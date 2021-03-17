@@ -6,24 +6,27 @@ import faker from 'faker'
 
 type SutTypes = {
     sut: RenderResult
-    validationStub: ValidationStub
 }
 
-const makeSut = (): SutTypes => {
+type SutParams = {
+    validationError: string
+}
+
+const makeSut = (params?: SutParams): SutTypes => {
     const validationStub = new ValidationStub()
-    validationStub.errorMessage = faker.random.words()
+    validationStub.errorMessage = params?.validationError
     const sut = render(<Login validation={validationStub} />)
-    return { sut, validationStub }
+    return { sut }
 }
 
 describe('<Login />', () => {
     afterEach(cleanup)
 
     it('should start with correct initial state', () => {
+        const errorMessage = faker.random.words()
         const {
-            sut: { getByTestId },
-            validationStub
-        } = makeSut()
+            sut: { getByTestId }
+        } = makeSut({ validationError: errorMessage })
 
         const errorWrap = getByTestId('error-wrap')
         expect(errorWrap.childElementCount).toBe(0)
@@ -32,48 +35,46 @@ describe('<Login />', () => {
         expect(submitButton.disabled).toBe(true)
 
         const emailStatus = getByTestId('email-status')
-        expect(emailStatus.title).toBe(validationStub.errorMessage)
+        expect(emailStatus.title).toBe(errorMessage)
         expect(emailStatus.textContent).toBe('🔴')
 
         const passwordStatus = getByTestId('password-status')
-        expect(passwordStatus.title).toBe(validationStub.errorMessage)
+        expect(passwordStatus.title).toBe(errorMessage)
         expect(passwordStatus.textContent).toBe('🔴')
     })
 
     it('should call email error if validation fails', () => {
+        const errorMessage = faker.random.words()
         const {
-            sut: { getByTestId },
-            validationStub
-        } = makeSut()
+            sut: { getByTestId }
+        } = makeSut({ validationError: errorMessage })
 
         const emailInput = getByTestId('email')
         fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
 
         const emailStatus = getByTestId('email-status')
-        expect(emailStatus.title).toBe(validationStub.errorMessage)
+        expect(emailStatus.title).toBe(errorMessage)
         expect(emailStatus.textContent).toBe('🔴')
     })
 
     it('should call password error if validation fails', () => {
+        const errorMessage = faker.random.words()
         const {
-            sut: { getByTestId },
-            validationStub
-        } = makeSut()
+            sut: { getByTestId }
+        } = makeSut({ validationError: errorMessage })
 
         const passwordInput = getByTestId('password')
         fireEvent.input(passwordInput, { target: { value: faker.internet.password() } })
 
         const passwordStatus = getByTestId('password-status')
-        expect(passwordStatus.title).toBe(validationStub.errorMessage)
+        expect(passwordStatus.title).toBe(errorMessage)
         expect(passwordStatus.textContent).toBe('🔴')
     })
 
     it('should show valid email state if Validation succeeds', () => {
         const {
-            sut: { getByTestId },
-            validationStub
+            sut: { getByTestId }
         } = makeSut()
-        validationStub.errorMessage = ''
         const emailInput = getByTestId('email')
         fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
 
@@ -84,10 +85,8 @@ describe('<Login />', () => {
 
     it('should show valid password state if Validation succeeds', () => {
         const {
-            sut: { getByTestId },
-            validationStub
+            sut: { getByTestId }
         } = makeSut()
-        validationStub.errorMessage = ''
         const passwordInput = getByTestId('password')
         fireEvent.input(passwordInput, { target: { value: faker.internet.password() } })
 
@@ -98,10 +97,8 @@ describe('<Login />', () => {
 
     it('should enable submit button if form is valid', () => {
         const {
-            sut: { getByTestId },
-            validationStub
+            sut: { getByTestId }
         } = makeSut()
-        validationStub.errorMessage = ''
 
         const emailInput = getByTestId('email')
         fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
