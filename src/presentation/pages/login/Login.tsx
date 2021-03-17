@@ -15,7 +15,7 @@ const Login = ({ validation }: LoginProps): JSX.Element => {
         password: '',
         mainError: null,
         emailError: '',
-        passwordError: 'Required'
+        passwordError: ''
     })
 
     useEffect(() => {
@@ -23,7 +23,7 @@ const Login = ({ validation }: LoginProps): JSX.Element => {
     }, [state.email])
 
     useEffect(() => {
-        validation?.validate('password', state.password)
+        setState((prev) => ({ ...prev, passwordError: validation?.validate('password', state.password) }))
     }, [state.password])
 
     return (
