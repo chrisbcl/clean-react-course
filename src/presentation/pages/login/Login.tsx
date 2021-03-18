@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import { Footer, FormStatus, Input, LoginHeader } from '@/presentation/components'
 import FormContext, { FormStateProps } from '@/presentation/contexts/form/FormContext'
 import { Validation } from '@/presentation/protocols/validation'
@@ -26,11 +26,16 @@ const Login = ({ validation }: LoginProps): JSX.Element => {
         setState((prev) => ({ ...prev, passwordError: validation?.validate('password', state.password) }))
     }, [state.password])
 
+    const onFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
+        e.preventDefault()
+        setState((prev) => ({ ...prev, isLoading: true }))
+    }
+
     return (
         <div className={styles.Login}>
             <LoginHeader />
             <FormContext.Provider value={{ state, setState }}>
-                <form className={styles.Form}>
+                <form className={styles.Form} onSubmit={onFormSubmit}>
                     <h2>Login</h2>
                     <Input type='email' name='email' placeholder='Enter your email' />
                     <Input type='password' name='password' placeholder='Enter your password' />
