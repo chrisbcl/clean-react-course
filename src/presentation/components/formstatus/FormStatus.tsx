@@ -10,7 +10,13 @@ const FormStatus = (): JSX.Element => {
     return (
         <div data-testid='error-wrap' className={styles.ErrorWrap}>
             {isLoading ? <Spinner className={styles.Spinner} /> : null}
-            {mainError ? <span className={styles.Error}>{mainError}</span> : null}
+            {mainError
+                ? (
+                    <span data-testid='main-error' className={styles.Error}>
+                        {mainError}
+                    </span>
+                )
+                : null}
         </div>
     )
 }

@@ -34,12 +34,19 @@ const Login = ({ validation, authentication }: LoginProps): JSX.Element => {
         if (state.isLoading || (state.emailError ?? state.passwordError)) {
             return
         }
-
-        setState((prev) => ({ ...prev, isLoading: true }))
-        await authentication?.auth({
-            email: state.email,
-            password: state.password
-        })
+        try {
+            setState((prev) => ({ ...prev, isLoading: true }))
+            await authentication?.auth({
+                email: state.email,
+                password: state.password
+            })
+        } catch (error) {
+            setState((prev) => ({
+                ...prev,
+                mainError: error.message,
+                isLoading: false
+            }))
+        }
     }
 
     return (
