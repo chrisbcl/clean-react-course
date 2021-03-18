@@ -53,8 +53,8 @@ describe('<Login />', () => {
     afterEach(cleanup)
 
     it('should start with correct initial state', () => {
-        const errorMessage = faker.random.words()
-        const { sut } = makeSut({ validationError: errorMessage })
+        const validationError = faker.random.words()
+        const { sut } = makeSut({ validationError })
 
         const errorWrap = sut.getByTestId('error-wrap')
         expect(errorWrap.childElementCount).toBe(0)
@@ -62,26 +62,26 @@ describe('<Login />', () => {
         const submitButton = sut.getByTestId('submit') as HTMLButtonElement
         expect(submitButton.disabled).toBe(true)
 
-        simulateStatusForField(sut, 'email', errorMessage)
-        simulateStatusForField(sut, 'password', errorMessage)
+        simulateStatusForField(sut, 'email', validationError)
+        simulateStatusForField(sut, 'password', validationError)
     })
 
     it('should call email error if validation fails', () => {
-        const errorMessage = faker.random.words()
-        const { sut } = makeSut({ validationError: errorMessage })
+        const validationError = faker.random.words()
+        const { sut } = makeSut({ validationError: validationError })
 
         populateEmailField(sut)
 
-        simulateStatusForField(sut, 'email', errorMessage)
+        simulateStatusForField(sut, 'email', validationError)
     })
 
     it('should call password error if validation fails', () => {
-        const errorMessage = faker.random.words()
-        const { sut } = makeSut({ validationError: errorMessage })
+        const validationError = faker.random.words()
+        const { sut } = makeSut({ validationError })
 
         populatePasswordField(sut)
 
-        simulateStatusForField(sut, 'password', errorMessage)
+        simulateStatusForField(sut, 'password', validationError)
     })
 
     it('should show valid email state if Validation succeeds', () => {
@@ -136,5 +136,16 @@ describe('<Login />', () => {
         simulateValidSubmit(sut)
 
         expect(authenticationSpy.callsCount).toBe(1)
+    })
+
+    it('should not call authentication if form is invalid', () => {
+        const validationError = faker.random.words()
+        const { sut, authenticationSpy } = makeSut({ validationError })
+
+        populateEmailField(sut)
+
+        fireEvent.submit(sut.getByTestId('form'))
+
+        expect(authenticationSpy.callsCount).toBe(0)
     })
 })
