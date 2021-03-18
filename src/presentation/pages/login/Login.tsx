@@ -31,7 +31,7 @@ const Login = ({ validation, authentication }: LoginProps): JSX.Element => {
     const onFormSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault()
 
-        if (state.isLoading) {
+        if (state.isLoading || (state.emailError ?? state.passwordError)) {
             return
         }
 
@@ -46,7 +46,7 @@ const Login = ({ validation, authentication }: LoginProps): JSX.Element => {
         <div className={styles.Login}>
             <LoginHeader />
             <FormContext.Provider value={{ state, setState }}>
-                <form className={styles.Form} onSubmit={onFormSubmit}>
+                <form data-testid='form' className={styles.Form} onSubmit={onFormSubmit}>
                     <h2>Login</h2>
                     <Input type='email' name='email' placeholder='Enter your email' />
                     <Input type='password' name='password' placeholder='Enter your password' />
