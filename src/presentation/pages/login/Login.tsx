@@ -30,6 +30,11 @@ const Login = ({ validation, authentication }: LoginProps): JSX.Element => {
 
     const onFormSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault()
+
+        if (state.isLoading) {
+            return
+        }
+
         setState((prev) => ({ ...prev, isLoading: true }))
         await authentication?.auth({
             email: state.email,
