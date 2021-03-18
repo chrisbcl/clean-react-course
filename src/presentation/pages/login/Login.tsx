@@ -4,6 +4,7 @@ import { Footer, FormStatus, Input, LoginHeader } from '@/presentation/component
 import FormContext, { FormStateProps } from '@/presentation/contexts/form/FormContext'
 import { Validation } from '@/presentation/protocols/validation'
 import styles from './Login.styles.scss'
+import { Link } from 'react-router-dom'
 
 type LoginProps = {
     validation?: Validation
@@ -66,7 +67,9 @@ const Login = ({ validation, authentication }: LoginProps): JSX.Element => {
                     >
                         Login
                     </button>
-                    <span className={styles.Link}>Create account</span>
+                    <Link data-testid='signup' to='/signup' className={styles.Link}>
+                        Create account
+                    </Link>
                     <FormStatus />
                 </form>
             </FormContext.Provider>
