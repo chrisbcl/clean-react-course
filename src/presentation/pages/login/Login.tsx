@@ -31,15 +31,16 @@ const Login = ({ validation, authentication }: LoginProps): JSX.Element => {
     const onFormSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault()
 
-        if (state.isLoading || (state.emailError ?? state.passwordError)) {
+        if (state.isLoading || !authentication || (state.emailError ?? state.passwordError)) {
             return
         }
         try {
             setState((prev) => ({ ...prev, isLoading: true }))
-            await authentication?.auth({
+            const account = await authentication.auth({
                 email: state.email,
                 password: state.password
             })
+            localStorage.setItem('accessToken', account?.accessToken)
         } catch (error) {
             setState((prev) => ({
                 ...prev,
