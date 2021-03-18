@@ -21,7 +21,7 @@ const history = createMemoryHistory({ initialEntries: ['/login'] })
 const makeSut = (params?: SutParams): SutTypes => {
     const validationStub = new ValidationStub()
     const authenticationSpy = new AuthenticationSpy()
-    validationStub.errorMessage = params?.validationError
+    validationStub.errorMessage = params?.validationError ?? null
 
     const sut = render(
         <Router history={history}>

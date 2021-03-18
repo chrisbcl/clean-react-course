@@ -18,16 +18,16 @@ const Login = ({ validation, authentication }: LoginProps): JSX.Element => {
         email: '',
         password: '',
         mainError: null,
-        emailError: '',
-        passwordError: ''
+        emailError: null,
+        passwordError: null
     })
 
     useEffect(() => {
-        setState((prev) => ({ ...prev, emailError: validation?.validate('email', state.email) }))
+        setState((prev) => ({ ...prev, emailError: validation?.validate('email', state.email) ?? null }))
     }, [state.email])
 
     useEffect(() => {
-        setState((prev) => ({ ...prev, passwordError: validation?.validate('password', state.password) }))
+        setState((prev) => ({ ...prev, passwordError: validation?.validate('password', state.password) ?? null }))
     }, [state.password])
 
     const onFormSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
