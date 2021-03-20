@@ -7,8 +7,8 @@ import styles from './Login.styles.scss'
 import { Link, useHistory } from 'react-router-dom'
 
 type LoginProps = {
-    validation?: Validation
-    authentication?: Authentication
+    validation: Validation
+    authentication: Authentication
 }
 
 const Login = ({ validation, authentication }: LoginProps): JSX.Element => {
@@ -23,17 +23,17 @@ const Login = ({ validation, authentication }: LoginProps): JSX.Element => {
     })
 
     useEffect(() => {
-        setState((prev) => ({ ...prev, emailError: validation?.validate('email', state.email) ?? null }))
+        setState((prev) => ({ ...prev, emailError: validation.validate('email', state.email) ?? null }))
     }, [state.email])
 
     useEffect(() => {
-        setState((prev) => ({ ...prev, passwordError: validation?.validate('password', state.password) ?? null }))
+        setState((prev) => ({ ...prev, passwordError: validation.validate('password', state.password) ?? null }))
     }, [state.password])
 
     const onFormSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault()
 
-        if (state.isLoading || !authentication || (state.emailError ?? state.passwordError)) {
+        if (state.isLoading || (state.emailError ?? state.passwordError)) {
             return
         }
         try {
