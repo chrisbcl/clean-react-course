@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "webpack serve --open",
+        "start": "webpack serve --env API_URL=http://fordevs.herokuapp.com/api --open",
         "test": "jest --passWithNoTests --no-cache --runInBand",
         "test:watch": "npm test -- --watch",
         "test:staged": "npm test -- --findRelatedTests",
