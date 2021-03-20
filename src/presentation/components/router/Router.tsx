@@ -1,3 +1,4 @@
+import { Signup } from '@/presentation/pages'
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
@@ -10,6 +11,9 @@ const Router = ({ makeLogin }: RouterProps): JSX.Element => {
         <BrowserRouter>
             <Switch>
                 <Route path='/login'>{makeLogin()}</Route>
+                <Route path='/signup'>
+                    <Signup />
+                </Route>
             </Switch>
         </BrowserRouter>
     )
