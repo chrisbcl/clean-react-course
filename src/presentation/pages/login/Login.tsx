@@ -1,5 +1,5 @@
 import React, { FormEvent, useEffect, useState } from 'react'
-import { Authentication } from '@/domain/usecases'
+import { Authentication, SaveAccessToken } from '@/domain/usecases'
 import { Footer, FormStatus, Input, LoginHeader } from '@/presentation/components'
 import FormContext, { FormStateProps } from '@/presentation/contexts/form/FormContext'
 import { Validation } from '@/presentation/protocols/validation'
@@ -9,9 +9,10 @@ import { Link, useHistory } from 'react-router-dom'
 type LoginProps = {
     validation: Validation
     authentication: Authentication
+    saveAccessToken: SaveAccessToken
 }
 
-const Login = ({ validation, authentication }: LoginProps): JSX.Element => {
+const Login = ({ validation, authentication, saveAccessToken }: LoginProps): JSX.Element => {
     const history = useHistory()
     const [state, setState] = useState<FormStateProps>({
         isLoading: false,
@@ -42,7 +43,7 @@ const Login = ({ validation, authentication }: LoginProps): JSX.Element => {
                 email: state.email,
                 password: state.password
             })
-            localStorage.setItem('accessToken', account.accessToken)
+            await saveAccessToken.save(account.accessToken)
             history.replace('/')
         } catch (error) {
             setState((prev) => ({
