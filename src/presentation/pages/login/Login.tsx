@@ -42,7 +42,7 @@ const Login = ({ validation, authentication }: LoginProps): JSX.Element => {
                 email: state.email,
                 password: state.password
             })
-            localStorage.setItem('accessToken', account?.accessToken)
+            localStorage.setItem('accessToken', account.accessToken)
             history.replace('/')
         } catch (error) {
             setState((prev) => ({

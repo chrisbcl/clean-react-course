@@ -19,7 +19,7 @@ const Input = (props: InputProps): JSX.Element => {
     }
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setState?.((prev) => ({ ...prev, [props.name as string]: e.target.value }))
+        setState((prev) => ({ ...prev, [props.name as string]: e.target.value }))
     }
 
     return (

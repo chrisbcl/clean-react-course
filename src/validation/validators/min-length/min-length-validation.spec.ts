@@ -8,13 +8,21 @@ describe('MinLengthValidation', () => {
     it('should return error if value is invalid', () => {
         const field = faker.database.column()
         const sut = makeSut(field)
-        const error = sut.validate(faker.random.number(4))
-        expect(error).toEqual(new InvalidFieldError(field))
+
+        const numberError = sut.validate(faker.random.number(4))
+        expect(numberError).toEqual(new InvalidFieldError(field))
+
+        const stringError = sut.validate(faker.random.alphaNumeric(4))
+        expect(stringError).toEqual(new InvalidFieldError(field))
     })
 
     it('should return falsy if value is valid', () => {
         const sut = makeSut()
-        const error = sut.validate(faker.random.alphaNumeric(5))
-        expect(error).toBeFalsy()
+
+        const numberError = sut.validate(faker.random.number(5) + 5)
+        expect(numberError).toBeFalsy()
+
+        const stringError = sut.validate(faker.random.alphaNumeric(5))
+        expect(stringError).toBeFalsy()
     })
 })
