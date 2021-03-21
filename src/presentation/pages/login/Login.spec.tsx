@@ -143,7 +143,7 @@ describe('<Login />', () => {
         const error = new InvalidCredentialsError()
         const { sut, authenticationSpy } = makeSut()
 
-        jest.spyOn(authenticationSpy, 'auth').mockReturnValueOnce(Promise.reject(error))
+        jest.spyOn(authenticationSpy, 'auth').mockRejectedValueOnce(error)
 
         await simulateValidSubmit(sut)
         testElementText(sut, 'main-error', error.message)
