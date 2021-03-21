@@ -30,7 +30,7 @@ describe('<Signup />', () => {
         FormHelper.testChildCount(sut, 'error-wrap', 0)
         FormHelper.testButtonDisabledStatus(sut, 'submit', true)
         FormHelper.testStatusForField(sut, 'name', validationError)
-        FormHelper.testStatusForField(sut, 'email', 'Required')
+        FormHelper.testStatusForField(sut, 'email', validationError)
         FormHelper.testStatusForField(sut, 'password', 'Required')
         FormHelper.testStatusForField(sut, 'passwordConfirmation', 'Required')
     })
@@ -41,5 +41,13 @@ describe('<Signup />', () => {
 
         FormHelper.populateField(sut, 'name')
         FormHelper.testStatusForField(sut, 'name', validationError)
+    })
+
+    it('should show email error if validation fails', () => {
+        const validationError = faker.random.words()
+        const { sut } = makeSut({ validationError })
+
+        FormHelper.populateField(sut, 'email')
+        FormHelper.testStatusForField(sut, 'email', validationError)
     })
 })
