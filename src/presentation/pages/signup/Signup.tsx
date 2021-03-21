@@ -58,6 +58,11 @@ const Signup = ({ validation, addAccount }: SignupProps): JSX.Element => {
 
     const onFormSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault()
+
+        if (state.isLoading) {
+            return
+        }
+
         setState((prev) => ({ ...prev, isLoading: true }))
 
         await addAccount.add({

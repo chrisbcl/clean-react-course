@@ -43,7 +43,7 @@ const Login = ({ validation, authentication, saveAccessToken }: LoginProps): JSX
     const onFormSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault()
 
-        if (state.isLoading || (state.emailError ?? state.passwordError)) {
+        if (state.isLoading || !!state.emailError || !!state.passwordError) {
             return
         }
         try {
