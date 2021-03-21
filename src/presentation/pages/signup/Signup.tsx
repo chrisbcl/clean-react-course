@@ -5,6 +5,7 @@ import FormContext from '@/presentation/contexts/form/FormContext'
 import { Validation } from '@/presentation/protocols/validation'
 import { AddAccount, SaveAccessToken } from '@/domain/usecases'
 import { useHistory } from 'react-router'
+import { Link } from 'react-router-dom'
 
 type SignupProps = {
     validation: Validation
@@ -113,7 +114,9 @@ const Signup = ({ validation, addAccount, saveAccessToken }: SignupProps): JSX.E
                     >
                         Create
                     </button>
-                    <span className={styles.Link}>Back to Login</span>
+                    <Link data-testid='login-link' replace to='/login' className={styles.Link}>
+                        Back to Login
+                    </Link>
                     <FormStatus />
                 </form>
             </FormContext.Provider>
