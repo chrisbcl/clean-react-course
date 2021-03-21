@@ -68,15 +68,21 @@ const Signup = ({ validation, addAccount }: SignupProps): JSX.Element => {
         ) {
             return
         }
-
-        setState((prev) => ({ ...prev, isLoading: true }))
-
-        await addAccount.add({
-            name: state.name,
-            email: state.email,
-            password: state.password,
-            passwordConfirmation: state.passwordConfirmation
-        })
+        try {
+            setState((prev) => ({ ...prev, isLoading: true }))
+            await addAccount.add({
+                name: state.name,
+                email: state.email,
+                password: state.password,
+                passwordConfirmation: state.passwordConfirmation
+            })
+        } catch (error) {
+            setState((prev) => ({
+                ...prev,
+                mainError: error.message,
+                isLoading: false
+            }))
+        }
     }
 
     return (
