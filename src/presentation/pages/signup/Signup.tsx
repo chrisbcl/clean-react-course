@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import { Footer, FormStatus, Input, LoginHeader } from '@/presentation/components'
 import styles from './Login.styles.scss'
 import FormContext from '@/presentation/contexts/form/FormContext'
@@ -54,11 +54,16 @@ const Signup = ({ validation }: SignupProps): JSX.Element => {
         }))
     }, [state.passwordConfirmation])
 
+    const onFormSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+        e.preventDefault()
+        setState((prev) => ({ ...prev, isLoading: true }))
+    }
+
     return (
         <div className={styles.Signup}>
             <LoginHeader />
             <FormContext.Provider value={{ state, setState }}>
-                <form className={styles.Form}>
+                <form data-testid='form' className={styles.Form} onSubmit={onFormSubmit}>
                     <h2>Create Account</h2>
                     <Input type='name' name='name' placeholder='Enter your name' />
                     <Input type='email' name='email' placeholder='Enter your email' />
