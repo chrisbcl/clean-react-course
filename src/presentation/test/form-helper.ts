@@ -30,3 +30,8 @@ export const testElementExists = (sut: RenderResult, elementTestId: string): voi
     const element = sut.getByTestId(elementTestId)
     expect(element).toBeTruthy()
 }
+
+export const testElementText = (sut: RenderResult, elementTestId: string, text: string): void => {
+    const element = sut.getByTestId(elementTestId)
+    expect(element.textContent).toBe(text)
+}
