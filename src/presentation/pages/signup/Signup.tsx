@@ -1,7 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Footer, FormStatus, Input, LoginHeader } from '@/presentation/components'
 import styles from './Login.styles.scss'
 import FormContext from '@/presentation/contexts/form/FormContext'
+import { Validation } from '@/presentation/protocols/validation'
+
+type SignupProps = {
+    validation: Validation
+}
 
 type SignupFormStateProps = {
     isLoading: boolean
@@ -16,24 +21,28 @@ type SignupFormStateProps = {
     passwordConfirmationError: string | null
 }
 
-const Signup = (): JSX.Element => {
-    const [state] = useState<SignupFormStateProps>({
+const Signup = ({ validation }: SignupProps): JSX.Element => {
+    const [state, setState] = useState<SignupFormStateProps>({
         isLoading: false,
         name: '',
         email: '',
         password: '',
         passwordConfirmation: '',
         mainError: null,
-        nameError: 'Required',
+        nameError: null,
         emailError: 'Required',
         passwordError: 'Required',
         passwordConfirmationError: 'Required'
     })
 
+    useEffect(() => {
+        setState((prev) => ({ ...prev, nameError: validation.validate('name', state.name) ?? null }))
+    }, [state.name])
+
     return (
         <div className={styles.Signup}>
             <LoginHeader />
-            <FormContext.Provider value={{ state, setState: () => {} }}>
+            <FormContext.Provider value={{ state, setState }}>
                 <form className={styles.Form}>
                     <h2>Create Account</h2>
                     <Input type='name' name='name' placeholder='Enter your name' />

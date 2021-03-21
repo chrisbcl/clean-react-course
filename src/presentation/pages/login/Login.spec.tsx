@@ -84,15 +84,15 @@ describe('<Login />', () => {
         FormHelper.testStatusForField(sut, 'password', validationError)
     })
 
-    it('should call email error if validation fails', () => {
+    it('should show email error if validation fails', () => {
         const validationError = faker.random.words()
-        const { sut } = makeSut({ validationError: validationError })
+        const { sut } = makeSut({ validationError })
 
         populateEmailField(sut)
         FormHelper.testStatusForField(sut, 'email', validationError)
     })
 
-    it('should call password error if validation fails', () => {
+    it('should show password error if validation fails', () => {
         const validationError = faker.random.words()
         const { sut } = makeSut({ validationError })
 
