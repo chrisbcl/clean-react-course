@@ -1,12 +1,12 @@
 import React, { FormEvent, useEffect, useState } from 'react'
 import { Footer, FormStatus, Input, LoginHeader } from '@/presentation/components'
-import styles from './Login.styles.scss'
 import FormContext from '@/presentation/contexts/form/FormContext'
 import { Validation } from '@/presentation/protocols/validation'
+import SubmitButton from '@/presentation/components/submitbutton/SubmitButton'
 import { AddAccount, SaveAccessToken } from '@/domain/usecases'
 import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
-import SubmitButton from '@/presentation/components/submitbutton/SubmitButton'
+import styles from './Signup.styles.scss'
 
 type SignupProps = {
     validation: Validation
