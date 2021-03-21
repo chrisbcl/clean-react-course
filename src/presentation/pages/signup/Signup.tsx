@@ -32,7 +32,7 @@ const Signup = ({ validation }: SignupProps): JSX.Element => {
         nameError: null,
         emailError: null,
         passwordError: null,
-        passwordConfirmationError: 'Required'
+        passwordConfirmationError: null
     })
 
     useEffect(() => {
@@ -46,6 +46,13 @@ const Signup = ({ validation }: SignupProps): JSX.Element => {
     useEffect(() => {
         setState((prev) => ({ ...prev, passwordError: validation.validate('password', state.password) ?? null }))
     }, [state.password])
+
+    useEffect(() => {
+        setState((prev) => ({
+            ...prev,
+            passwordConfirmationError: validation.validate('passwordConfirmation', state.passwordConfirmation) ?? null
+        }))
+    }, [state.passwordConfirmation])
 
     return (
         <div className={styles.Signup}>
