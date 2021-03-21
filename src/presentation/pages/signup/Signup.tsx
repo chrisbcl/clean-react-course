@@ -59,7 +59,13 @@ const Signup = ({ validation, addAccount }: SignupProps): JSX.Element => {
     const onFormSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault()
 
-        if (state.isLoading) {
+        if (
+            state.isLoading ||
+            !!state.nameError ||
+            !!state.emailError ||
+            !!state.passwordError ||
+            !!state.passwordConfirmationError
+        ) {
             return
         }
 
