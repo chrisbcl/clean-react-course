@@ -64,7 +64,17 @@ const Signup = ({ validation }: SignupProps): JSX.Element => {
                     <Input type='email' name='email' placeholder='Enter your email' />
                     <Input type='password' name='password' placeholder='Enter your password' />
                     <Input type='password' name='passwordConfirmation' placeholder='Confirm your password' />
-                    <button data-testid='submit' disabled className={styles.Submit} type='submit'>
+                    <button
+                        data-testid='submit'
+                        disabled={
+                            !!state.nameError ||
+                            !!state.emailError ||
+                            !!state.passwordError ||
+                            !!state.passwordConfirmationError
+                        }
+                        className={styles.Submit}
+                        type='submit'
+                    >
                         Create
                     </button>
                     <span className={styles.Link}>Back to Login</span>
