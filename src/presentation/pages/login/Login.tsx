@@ -79,7 +79,7 @@ const Login = ({ validation, authentication, saveAccessToken }: LoginProps): JSX
                     >
                         Login
                     </button>
-                    <Link data-testid='signup' to='/signup' className={styles.Link}>
+                    <Link data-testid='signup-link' to='/signup' className={styles.Link}>
                         Create account
                     </Link>
                     <FormStatus />
