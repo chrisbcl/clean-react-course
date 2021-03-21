@@ -3,11 +3,13 @@ import { Footer, FormStatus, Input, LoginHeader } from '@/presentation/component
 import styles from './Login.styles.scss'
 import FormContext from '@/presentation/contexts/form/FormContext'
 import { Validation } from '@/presentation/protocols/validation'
-import { AddAccount } from '@/domain/usecases'
+import { AddAccount, SaveAccessToken } from '@/domain/usecases'
+import { useHistory } from 'react-router'
 
 type SignupProps = {
     validation: Validation
     addAccount: AddAccount
+    saveAccessToken: SaveAccessToken
 }
 
 type SignupFormStateProps = {
@@ -23,7 +25,8 @@ type SignupFormStateProps = {
     passwordConfirmationError: string | null
 }
 
-const Signup = ({ validation, addAccount }: SignupProps): JSX.Element => {
+const Signup = ({ validation, addAccount, saveAccessToken }: SignupProps): JSX.Element => {
+    const history = useHistory()
     const [state, setState] = useState<SignupFormStateProps>({
         isLoading: false,
         name: '',
@@ -70,12 +73,14 @@ const Signup = ({ validation, addAccount }: SignupProps): JSX.Element => {
         }
         try {
             setState((prev) => ({ ...prev, isLoading: true }))
-            await addAccount.add({
+            const account = await addAccount.add({
                 name: state.name,
                 email: state.email,
                 password: state.password,
                 passwordConfirmation: state.passwordConfirmation
             })
+            await saveAccessToken.save(account.accessToken)
+            history.replace('/')
         } catch (error) {
             setState((prev) => ({
                 ...prev,
