@@ -30,7 +30,7 @@ const Signup = ({ validation }: SignupProps): JSX.Element => {
         passwordConfirmation: '',
         mainError: null,
         nameError: null,
-        emailError: 'Required',
+        emailError: null,
         passwordError: 'Required',
         passwordConfirmationError: 'Required'
     })
@@ -38,6 +38,10 @@ const Signup = ({ validation }: SignupProps): JSX.Element => {
     useEffect(() => {
         setState((prev) => ({ ...prev, nameError: validation.validate('name', state.name) ?? null }))
     }, [state.name])
+
+    useEffect(() => {
+        setState((prev) => ({ ...prev, emailError: validation.validate('email', state.email) ?? null }))
+    }, [state.email])
 
     return (
         <div className={styles.Signup}>
