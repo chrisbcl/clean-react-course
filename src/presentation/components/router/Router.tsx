@@ -12,7 +12,7 @@ const Router = ({ makeLogin }: RouterProps): JSX.Element => {
             <Switch>
                 <Route path='/login'>{makeLogin()}</Route>
                 <Route path='/signup'>
-                    <Signup validation={{} as any} />
+                    <Signup validation={{} as any} addAccount={{} as any} />
                 </Route>
             </Switch>
         </BrowserRouter>

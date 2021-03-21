@@ -3,9 +3,11 @@ import { Footer, FormStatus, Input, LoginHeader } from '@/presentation/component
 import styles from './Login.styles.scss'
 import FormContext from '@/presentation/contexts/form/FormContext'
 import { Validation } from '@/presentation/protocols/validation'
+import { AddAccount } from '@/domain/usecases'
 
 type SignupProps = {
     validation: Validation
+    addAccount: AddAccount
 }
 
 type SignupFormStateProps = {
@@ -21,7 +23,7 @@ type SignupFormStateProps = {
     passwordConfirmationError: string | null
 }
 
-const Signup = ({ validation }: SignupProps): JSX.Element => {
+const Signup = ({ validation, addAccount }: SignupProps): JSX.Element => {
     const [state, setState] = useState<SignupFormStateProps>({
         isLoading: false,
         name: '',
@@ -57,6 +59,13 @@ const Signup = ({ validation }: SignupProps): JSX.Element => {
     const onFormSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault()
         setState((prev) => ({ ...prev, isLoading: true }))
+
+        await addAccount.add({
+            name: state.name,
+            email: state.email,
+            password: state.password,
+            passwordConfirmation: state.passwordConfirmation
+        })
     }
 
     return (
