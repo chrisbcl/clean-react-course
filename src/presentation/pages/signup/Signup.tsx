@@ -1,26 +1,49 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Footer, FormStatus, Input, LoginHeader } from '@/presentation/components'
-import FormContext from '@/presentation/contexts/form/FormContext'
 import styles from './Login.styles.scss'
-import { Link } from 'react-router-dom'
+import FormContext from '@/presentation/contexts/form/FormContext'
+
+type SignupFormStateProps = {
+    isLoading: boolean
+    name: string
+    email: string
+    password: string
+    passwordConfirmation: string
+    mainError: string | null
+    nameError: string | null
+    emailError: string | null
+    passwordError: string | null
+    passwordConfirmationError: string | null
+}
 
 const Signup = (): JSX.Element => {
+    const [state] = useState<SignupFormStateProps>({
+        isLoading: false,
+        name: '',
+        email: '',
+        password: '',
+        passwordConfirmation: '',
+        mainError: null,
+        nameError: 'Required',
+        emailError: 'Required',
+        passwordError: 'Required',
+        passwordConfirmationError: 'Required'
+    })
+
     return (
         <div className={styles.Signup}>
             <LoginHeader />
-            <FormContext.Provider value={{ state: {} as any, setState: () => {} }}>
+            <FormContext.Provider value={{ state, setState: () => {} }}>
                 <form className={styles.Form}>
                     <h2>Create Account</h2>
                     <Input type='name' name='name' placeholder='Enter your name' />
                     <Input type='email' name='email' placeholder='Enter your email' />
                     <Input type='password' name='password' placeholder='Enter your password' />
-                    <Input type='password' name='password-confirmation' placeholder='Confirm your password' />
-                    <button className={styles.Submit} type='submit'>
+                    <Input type='password' name='passwordConfirmation' placeholder='Confirm your password' />
+                    <button data-testid='submit' disabled className={styles.Submit} type='submit'>
                         Create
                     </button>
-                    <Link to='/login' className={styles.Link}>
-                        Back to Login
-                    </Link>
+                    <span className={styles.Link}>Back to Login</span>
                     <FormStatus />
                 </form>
             </FormContext.Provider>
