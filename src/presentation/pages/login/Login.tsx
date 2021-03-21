@@ -5,6 +5,7 @@ import FormContext from '@/presentation/contexts/form/FormContext'
 import { Validation } from '@/presentation/protocols/validation'
 import styles from './Login.styles.scss'
 import { Link, useHistory } from 'react-router-dom'
+import SubmitButton from '@/presentation/components/submitbutton/SubmitButton'
 
 type LoginProps = {
     validation: Validation
@@ -14,6 +15,7 @@ type LoginProps = {
 
 type LoginFormStateProps = {
     isLoading: boolean
+    isFormInvalid: boolean
     email: string
     password: string
     mainError: string | null
@@ -25,6 +27,7 @@ const Login = ({ validation, authentication, saveAccessToken }: LoginProps): JSX
     const history = useHistory()
     const [state, setState] = useState<LoginFormStateProps>({
         isLoading: false,
+        isFormInvalid: true,
         email: '',
         password: '',
         mainError: null,
@@ -33,17 +36,21 @@ const Login = ({ validation, authentication, saveAccessToken }: LoginProps): JSX
     })
 
     useEffect(() => {
-        setState((prev) => ({ ...prev, emailError: validation.validate('email', state.email) ?? null }))
-    }, [state.email])
+        const emailError = validation.validate('email', state.email)
+        const passwordError = validation.validate('password', state.password)
 
-    useEffect(() => {
-        setState((prev) => ({ ...prev, passwordError: validation.validate('password', state.password) ?? null }))
-    }, [state.password])
+        setState((prev) => ({
+            ...prev,
+            emailError,
+            passwordError,
+            isFormInvalid: !!emailError || !!passwordError
+        }))
+    }, [state.email, state.password])
 
     const onFormSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault()
 
-        if (state.isLoading || !!state.emailError || !!state.passwordError) {
+        if (state.isLoading || !!state.isFormInvalid) {
             return
         }
         try {
@@ -71,14 +78,7 @@ const Login = ({ validation, authentication, saveAccessToken }: LoginProps): JSX
                     <h2>Login</h2>
                     <Input type='email' name='email' placeholder='Enter your email' />
                     <Input type='password' name='password' placeholder='Enter your password' />
-                    <button
-                        data-testid='submit'
-                        disabled={!!state.emailError || !!state.passwordError}
-                        className={styles.Submit}
-                        type='submit'
-                    >
-                        Login
-                    </button>
+                    <SubmitButton disabled={state.isFormInvalid}>Login</SubmitButton>
                     <Link data-testid='signup-link' to='/signup' className={styles.Link}>
                         Create account
                     </Link>

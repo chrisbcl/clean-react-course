@@ -6,6 +6,7 @@ import { Validation } from '@/presentation/protocols/validation'
 import { AddAccount, SaveAccessToken } from '@/domain/usecases'
 import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
+import SubmitButton from '@/presentation/components/submitbutton/SubmitButton'
 
 type SignupProps = {
     validation: Validation
@@ -15,6 +16,7 @@ type SignupProps = {
 
 type SignupFormStateProps = {
     isLoading: boolean
+    isFormInvalid: boolean
     name: string
     email: string
     password: string
@@ -30,6 +32,7 @@ const Signup = ({ validation, addAccount, saveAccessToken }: SignupProps): JSX.E
     const history = useHistory()
     const [state, setState] = useState<SignupFormStateProps>({
         isLoading: false,
+        isFormInvalid: true,
         name: '',
         email: '',
         password: '',
@@ -42,34 +45,25 @@ const Signup = ({ validation, addAccount, saveAccessToken }: SignupProps): JSX.E
     })
 
     useEffect(() => {
-        setState((prev) => ({ ...prev, nameError: validation.validate('name', state.name) ?? null }))
-    }, [state.name])
+        const nameError = validation.validate('name', state.name)
+        const emailError = validation.validate('email', state.email)
+        const passwordError = validation.validate('password', state.password)
+        const passwordConfirmationError = validation.validate('passwordConfirmation', state.passwordConfirmation)
 
-    useEffect(() => {
-        setState((prev) => ({ ...prev, emailError: validation.validate('email', state.email) ?? null }))
-    }, [state.email])
-
-    useEffect(() => {
-        setState((prev) => ({ ...prev, passwordError: validation.validate('password', state.password) ?? null }))
-    }, [state.password])
-
-    useEffect(() => {
         setState((prev) => ({
             ...prev,
-            passwordConfirmationError: validation.validate('passwordConfirmation', state.passwordConfirmation) ?? null
+            nameError,
+            emailError,
+            passwordError,
+            passwordConfirmationError,
+            isFormInvalid: !!nameError || !!emailError || !!passwordError || !!passwordConfirmationError
         }))
-    }, [state.passwordConfirmation])
+    }, [state.name, state.email, state.password, state.passwordConfirmation])
 
     const onFormSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault()
 
-        if (
-            state.isLoading ||
-            !!state.nameError ||
-            !!state.emailError ||
-            !!state.passwordError ||
-            !!state.passwordConfirmationError
-        ) {
+        if (state.isLoading || state.isFormInvalid) {
             return
         }
         try {
@@ -101,19 +95,7 @@ const Signup = ({ validation, addAccount, saveAccessToken }: SignupProps): JSX.E
                     <Input type='email' name='email' placeholder='Enter your email' />
                     <Input type='password' name='password' placeholder='Enter your password' />
                     <Input type='password' name='passwordConfirmation' placeholder='Confirm your password' />
-                    <button
-                        data-testid='submit'
-                        disabled={
-                            !!state.nameError ||
-                            !!state.emailError ||
-                            !!state.passwordError ||
-                            !!state.passwordConfirmationError
-                        }
-                        className={styles.Submit}
-                        type='submit'
-                    >
-                        Create
-                    </button>
+                    <SubmitButton disabled={state.isFormInvalid}>Create</SubmitButton>
                     <Link data-testid='login-link' replace to='/login' className={styles.Link}>
                         Back to Login
                     </Link>
