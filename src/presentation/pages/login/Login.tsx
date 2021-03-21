@@ -1,7 +1,7 @@
 import React, { FormEvent, useEffect, useState } from 'react'
 import { Authentication, SaveAccessToken } from '@/domain/usecases'
 import { Footer, FormStatus, Input, LoginHeader } from '@/presentation/components'
-import FormContext, { FormStateProps } from '@/presentation/contexts/form/FormContext'
+import FormContext from '@/presentation/contexts/form/FormContext'
 import { Validation } from '@/presentation/protocols/validation'
 import styles from './Login.styles.scss'
 import { Link, useHistory } from 'react-router-dom'
@@ -12,9 +12,18 @@ type LoginProps = {
     saveAccessToken: SaveAccessToken
 }
 
+type LoginFormStateProps = {
+    isLoading: boolean
+    email: string
+    password: string
+    mainError: string | null
+    emailError: string | null
+    passwordError: string | null
+}
+
 const Login = ({ validation, authentication, saveAccessToken }: LoginProps): JSX.Element => {
     const history = useHistory()
-    const [state, setState] = useState<FormStateProps>({
+    const [state, setState] = useState<LoginFormStateProps>({
         isLoading: false,
         email: '',
         password: '',

@@ -7,7 +7,6 @@ type InputProps = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputEle
 
 const Input = (props: InputProps): JSX.Element => {
     const { state, setState } = useContext(FormContext)
-    // @ts-expect-error
     const error = state[`${props.name}Error`]
 
     const getStatus = (): string => {
@@ -19,7 +18,7 @@ const Input = (props: InputProps): JSX.Element => {
     }
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setState((prev) => ({ ...prev, [props.name as string]: e.target.value }))
+        setState((prev: any) => ({ ...prev, [props.name as string]: e.target.value }))
     }
 
     return (
