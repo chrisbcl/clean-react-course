@@ -158,7 +158,7 @@ describe('<Login />', () => {
         const error = new InvalidCredentialsError()
         const { sut, saveAccessTokenMock } = makeSut()
 
-        jest.spyOn(saveAccessTokenMock, 'save').mockReturnValueOnce(Promise.reject(error))
+        jest.spyOn(saveAccessTokenMock, 'save').mockRejectedValueOnce(error)
 
         await simulateValidSubmit(sut)
         FormHelper.testElementText(sut, 'main-error', error.message)
