@@ -1,3 +1,3 @@
 export interface Validation {
-    validate: <T = any>(fieldName: string, fieldValue: T) => string | null
+    validate: (fieldName: string, input: { [key: string]: any }) => string | null
 }
